@@ -1,0 +1,23 @@
+{
+    "name": "anchu/ftp",
+    "description": "A simple Laravel 4 ftp service provider",
+    "keywords": ["ftp","laravel","l4","service provider"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Harish Anchu",
+            "email": "harishanchu@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.1.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Anchu\\Ftp\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
+
