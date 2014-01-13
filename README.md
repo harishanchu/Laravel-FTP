@@ -25,7 +25,7 @@ Run `php artisan config:publish anchu/ftp` and modify the config file with your 
 You can add dynamic FTP connections with following syntax
 
 ```php
-Config::set('ftp.connections.key', array(
+Config::set('ftp::connections.key', array(
            'host'   => '',
            'username' => '',
            'password'   => '',
