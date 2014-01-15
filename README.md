@@ -34,7 +34,29 @@ Config::set('ftp::connections.key', array(
 ));
 ```
 
-Basic usage
+Accessing connections
+---------------------
+You can access default FTP connection via the `Ftp::connection` method:
+```php
+$listing = Ftp::connection()->getDirListing(...);
+```
+
+When using multiple connections you can access each specific ftp connection by passing connection name:
+```php
+$listing = Ftp::connection('foo')->getDirListing(...);
+```
+
+Sometimes you may need to reconnect to a given ftp:
+```php
+$listing = Ftp::reconnect('foo');
+```
+
+If you need to disconnect from a given ftp use the disconnect method:
+```php
+$listing = Ftp::disconnect('foo');
+```
+
+Basic usage examples
 ------------
 ```php
 // With custom connection
