@@ -3,6 +3,8 @@ Laravel-FTP
 
 A simple Laravel 4 ftp service provider.
 
+[![Build Status](https://travis-ci.org/harishanchu/Laravel-FTP.png?branch=master)](https://travis-ci.org/harishanchu/Laravel-FTP)
+
 Installation
 ------------
 
@@ -38,22 +40,22 @@ Accessing connections
 ---------------------
 You can access default FTP connection via the `Ftp::connection` method:
 ```php
-$listing = Ftp::connection()->getDirListing(...);
+Ftp::connection()->getDirListing(...);
 ```
 
 When using multiple connections you can access each specific ftp connection by passing connection name:
 ```php
-$listing = Ftp::connection('foo')->getDirListing(...);
+Ftp::connection('foo')->getDirListing(...);
 ```
 
 Sometimes you may need to reconnect to a given ftp:
 ```php
-$listing = Ftp::reconnect('foo');
+Ftp::reconnect('foo');
 ```
 
 If you need to disconnect from a given ftp use the disconnect method:
 ```php
-$listing = Ftp::disconnect('foo');
+Ftp::disconnect('foo');
 ```
 
 Basic usage examples
@@ -62,7 +64,42 @@ Basic usage examples
 // With custom connection
 $listing = Ftp::connection('my-ftp-connection')->getDirListing();
 
-// Using default connection
+// with default connection
 $listing = FTP::connection()->getDirListing();
 $status = Ftp::connection()->makeDir('directory-name');
 ```
+
+Supported methods
+-----------------
+**getDirListing($directory, $parameters )**
+
+Returns a list of files in the given directory
+
+ - `$directory`: The directory to be listed. Default value: `.`.
+ - `$parameters`: Optional parameters to prefix with directory. Default: `-la`.
+
+**makeDir($directory)**
+
+Creates the specified directory on the FTP server.
+
+ - `$directory`: The name of the directory that will be created.
+
+**changeDir($directory)**
+
+Changes the current directory on a FTP server.
+
+ - `$directory`: The target directory.
+
+**uploadFileuploadFile($fileFrom, $fileTo)**
+
+Uploads the data from a file pointer to a remote file on the FTP server.
+
+ - `$fileFrom`: An open file pointer on the local file. Reading stops at end of file.
+ - `$fileTo`: The remote file path.
+
+**downloadFile($fileFrom, $fileTo)**
+
+Downloads a file from the FTP server
+
+ - `$fileFrom`: The remote file path.
+ - `$fileTo`: The local file path (will be overwritten if the file already exists).
