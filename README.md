@@ -141,6 +141,6 @@ Renames a file or a directory on the FTP server.
 **size($remoteFile)**
 
 Returns the size of the given file in bytes.
-Note: Not all servers support this feature.
+`Note: Not all servers support this feature.`
 
  - `$remoteFile`: The remote file.
