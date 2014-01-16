@@ -103,3 +103,44 @@ Downloads a file from the FTP server
 
  - `$fileFrom`: The remote file path.
  - `$fileTo`: The local file path (will be overwritten if the file already exists).
+
+**moveUp()**
+
+ Changes to the parent directory.
+
+**permission($mode, $filename)**
+
+Set permissions on a file.
+
+ - `$mode`: The new permissions, given as an octal value.
+ - `$filename`: The remote file.
+
+**delete($path)**
+
+Deletes the file specified by path from the FTP server.
+
+ - `$path`: The file to delete.
+
+**currentDir()**
+
+Returns the current directory name
+
+**rename($oldName, $newName)**
+
+Renames a file or a directory on the FTP server.
+
+ - `$oldName`: The old file/directory name.
+ - `$newName`: The new name.
+
+**removeDir($directory)**
+
+ Removes a directory
+
+  - `$directory`: The directory to delete. This must be either an absolute or relative path to an empty directory.
+
+**size($remoteFile)**
+
+Returns the size of the given file in bytes.
+Note: Not all servers support this feature.
+
+ - `$remoteFile`: The remote file.
