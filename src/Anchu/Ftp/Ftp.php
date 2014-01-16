@@ -169,4 +169,82 @@ class Ftp {
             return false;
     }
 
+
+    /**
+     * Changes to the parent directory.
+     *
+     * @return bool
+     */
+    public function moveUp()
+    {
+        return ftp_cdup($this->connectionId);
+    }
+
+    /**
+     * Set permissions on a file.
+     *
+     * @param $mode
+     * @param $filename
+     * @return int
+     */
+    public function permission($mode, $filename)
+    {
+        return ftp_chmod($this->connectionId, $mode, $filename);
+    }
+
+    /**
+     * Deletes the file specified by path from the FTP server.
+     *
+     * @param $path
+     * @return bool
+     */
+    public function delete($path)
+    {
+        return ftp_delete($this->connectionId, $path);
+    }
+
+    /**
+     * Returns the current directory name
+     *
+     * @return string
+     */
+    public function currentDir()
+    {
+        return ftp_pwd($this->connectionId);
+    }
+
+    /**
+     * Renames a file or a directory on the FTP server
+     *
+     * @param $oldName
+     * @param $newName
+     * @return bool
+     */
+    public function rename($oldName, $newName)
+    {
+        return ftp_rename($this->connectionId, $oldName, $newName);
+    }
+
+    /**
+     * Removes a directory.
+     *
+     * @param $directory
+     * @return bool
+     */
+    public function removeDir($directory)
+    {
+        return ftp_rmdir($this->connectionId, $directory);
+    }
+
+    /**
+     * Returns the size of the given file
+     *
+     * @param $remoteFile
+     * @return int
+     */
+    public function size($remoteFile)
+    {
+        return ftp_size($this->connectionId, $remoteFile);
+    }
+
 }
