@@ -159,7 +159,8 @@ class Ftp {
      */
     public function downloadFile ($fileFrom, $fileTo)
     {
-        $extension = end(explode('.', $fileFrom));
+        $fileInfos = explode('.', $fileFrom);
+        $extension = end($fileInfos);
 
         $mode = $this->findTransferModeForExtension($extension);
         
