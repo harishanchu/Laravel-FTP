@@ -64,7 +64,7 @@ Basic usage examples
 $listing = Ftp::connection('my-ftp-connection')->getDirListing();
 
 // with default connection
-$listing = FTP::connection()->getDirListing();
+$listing = Ftp::connection()->getDirListing();
 $status = Ftp::connection()->makeDir('directory-name');
 ```
 
