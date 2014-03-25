@@ -22,7 +22,7 @@ Add the service provider in `app/config/app.php`:
 
 Configuration
 ------------
-Run `php artisan config:publish anchu/ftp` and modify the config file with your ftp connections.
+Run `php artisan config:publish anchu/ftp` and modify the config file(`/app/config/packages/anchu/ftp/config.php`) with your ftp connections.
 
 You can add dynamic FTP connections with following syntax
 
