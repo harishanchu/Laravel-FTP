@@ -30,8 +30,8 @@ class Ftp {
     {
         if(!isset($config['port']))
             $config['port'] = 21;
-        
-        $connectionId = ftp_connect($config['host']);
+
+        $connectionId = ftp_connect($config['host'],$config['port']);
         $loginResponse = ftp_login($connectionId, $config['username'], $config['password']);
         ftp_pasv($connectionId, $config['passive']);
         ftp_set_option($connectionId, FTP_TIMEOUT_SEC, 300);
