@@ -28,6 +28,9 @@ class Ftp {
      */
     public function connect($config)
     {
+        if(!isset($config['port']))
+            $config['port'] = 21;
+        
         $connectionId = ftp_connect($config['host']);
         $loginResponse = ftp_login($connectionId, $config['username'], $config['password']);
         ftp_pasv($connectionId, $config['passive']);
