@@ -26,6 +26,7 @@ return array(
 
         'connection1' => array(
             'host'   => '',
+            'port'  => 21,
             'username' => '',
             'password'   => '',
             'passive'   => false,
