@@ -60,9 +60,11 @@ class Ftp {
      * @param string $parameters
      * @return array
      */
-    public function getDirListing($directory = '.', $parameters = '-la')
+    public function getDirListing($directory = '.', $parameters = null)
     {
-        $contentsArray = ftp_nlist($this->connectionId, $parameters . '  ' . $directory);
+        if($parameters)
+            $directory = $parameters . '  ' . $directory;
+        $contentsArray = ftp_nlist($this->connectionId, $directory);
 
         return $contentsArray;
     }

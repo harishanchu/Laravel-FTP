@@ -75,7 +75,7 @@ Supported methods
 Returns a list of files in the given directory
 
  - `$directory`: The directory to be listed. Default value: `.`.
- - `$parameters`: Optional parameters to prefix with directory. Default: `-la`.
+ - `$parameters`: Optional parameters to prefix with directory. For example: `-la`. Default: `null`.
 
 **makeDir($directory)**
 
