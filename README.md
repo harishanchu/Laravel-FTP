@@ -89,7 +89,7 @@ Changes the current directory on a FTP server.
 
  - `$directory`: The target directory.
 
-**uploadFileuploadFile($fileFrom, $fileTo)**
+**uploadFile($fileFrom, $fileTo)**
 
 Uploads the data from a file pointer to a remote file on the FTP server.
 
