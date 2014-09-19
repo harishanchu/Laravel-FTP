@@ -91,9 +91,9 @@ Changes the current directory on a FTP server.
 
 **uploadFile($fileFrom, $fileTo)**
 
-Uploads the data from a file pointer to a remote file on the FTP server.
+Uploads a local file to the FTP server.
 
- - `$fileFrom`: An open file pointer on the local file. Reading stops at end of file.
+ - `$fileFrom`: The local file path.
  - `$fileTo`: The remote file path.
 
 **downloadFile($fileFrom, $fileTo)**
