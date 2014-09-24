@@ -253,4 +253,15 @@ class Ftp {
         return ftp_size($this->connectionId, $remoteFile);
     }
 
+    /**
+     * Returns the last modified time of the given file
+     *
+     * @param $remoteFile
+     * @return int
+     */
+    public function time($remoteFile)
+    {
+        return ftp_mdtm($this->connectionId, $remoteFile);
+    }
+
 }
