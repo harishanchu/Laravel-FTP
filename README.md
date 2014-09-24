@@ -143,3 +143,10 @@ Returns the size of the given file in bytes.
 `Note: Not all servers support this feature.`
 
  - `$remoteFile`: The remote file.
+
+**time($remoteFile)**
+
+Returns the last modified time of the given file
+`Note: Not all servers support this feature.`
+
+ - `$remoteFile`: The remote file.
