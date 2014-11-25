@@ -162,19 +162,38 @@ class Ftp {
      * @param $fileTo
      * @return bool
      */
-    public function downloadFile ($fileFrom, $fileTo)
+    public function downloadFile($fileFrom, $fileTo)
     {
         $fileInfos = explode('.', $fileFrom);
         $extension = end($fileInfos);
 
         $mode = $this->findTransferModeForExtension($extension);
-        
+
         if (ftp_get($this->connectionId, $fileTo, $fileFrom, $mode, 0))
-            return true;    
+            return true;
         else
             return false;
     }
 
+    /**
+     * Download a file to output buffer and return
+     *
+     * @param $fileFrom
+     * @return bool|string
+     */
+    public function readFile($fileFrom)
+    {
+        $fileTo = "php://output";
+        ob_start();
+        $result = $this->downloadFile($fileFrom, $fileTo);
+        $data = ob_get_contents();
+        ob_end_clean();
+
+        if($result)
+            return $data;
+        else
+            return $result;
+    }
 
     /**
      * Changes to the parent directory.
