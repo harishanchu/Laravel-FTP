@@ -35,7 +35,9 @@ class FtpServiceProvider extends ServiceProvider {
         $this->app->booting(function()
         {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+            // alias 'Ftp' Will be removed soon
             $loader->alias('Ftp', 'Anchu\Ftp\Facades\Ftp');
+            $loader->alias('FTP', 'Anchu\Ftp\Facades\Ftp');
         });
 	}
 
