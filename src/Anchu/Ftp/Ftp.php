@@ -64,9 +64,15 @@ class Ftp {
     {
         if($parameters)
             $directory = $parameters . '  ' . $directory;
-        $contentsArray = ftp_nlist($this->connectionId, $directory);
 
-        return $contentsArray;
+        try {
+            $contentsArray = ftp_nlist($this->connectionId, $directory);
+
+            return $contentsArray;
+        } catch(\Exception $e) {
+            return false;
+        }
+
     }
 
     /**
@@ -77,10 +83,14 @@ class Ftp {
      */
     public function makeDir($directory)
     {
-        if (ftp_mkdir($this->connectionId, $directory))
-            return true;
-        else
+        try {
+            if (ftp_mkdir($this->connectionId, $directory))
+                return true;
+            else
+                return false;
+        } catch(\Exception $e) {
             return false;
+        }
     }
 
     /**
@@ -91,10 +101,14 @@ class Ftp {
      */
     public function changeDir($directory)
     {
-        if(ftp_chdir($this->connectionId, $directory))
-            return true;
-        else
+        try {
+            if(ftp_chdir($this->connectionId, $directory))
+                return true;
+            else
+                return false;
+        } catch(\Exception $e) {
             return false;
+        }
     }
 
     /**
@@ -147,12 +161,14 @@ class Ftp {
      */
     public function uploadFile($fileFrom, $fileTo)
     {
-        $upload = @ftp_put($this->connectionId, $fileTo, $fileFrom, $this->findTransferModeForFile($fileFrom));
-
-        if ($upload)
-            return true;
-        else
+        try {
+            if(ftp_put($this->connectionId, $fileTo, $fileFrom, $this->findTransferModeForFile($fileFrom)))
+                return true;
+            else
+                return false;
+        } catch(\Exception $e) {
             return false;
+        }
     }
 
     /**
@@ -169,10 +185,14 @@ class Ftp {
 
         $mode = $this->findTransferModeForExtension($extension);
 
-        if (ftp_get($this->connectionId, $fileTo, $fileFrom, $mode, 0))
-            return true;
-        else
+        try {
+            if (ftp_get($this->connectionId, $fileTo, $fileFrom, $mode, 0))
+                return true;
+            else
+                return false;
+        } catch(\Exception $e) {
             return false;
+        }
     }
 
     /**
@@ -183,11 +203,15 @@ class Ftp {
      */
     public function readFile($fileFrom)
     {
-        $fileTo = "php://output";
-        ob_start();
-        $result = $this->downloadFile($fileFrom, $fileTo);
-        $data = ob_get_contents();
-        ob_end_clean();
+        try {
+            $fileTo = "php://output";
+            ob_start();
+            $result = $this->downloadFile($fileFrom, $fileTo);
+            $data = ob_get_contents();
+            ob_end_clean();
+        } catch(\Exception $e) {
+            return false;
+        }
 
         if($result)
             return $data;
@@ -202,7 +226,11 @@ class Ftp {
      */
     public function moveUp()
     {
-        return ftp_cdup($this->connectionId);
+        try {
+            return ftp_cdup($this->connectionId);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -214,7 +242,11 @@ class Ftp {
      */
     public function permission($mode, $filename)
     {
-        return ftp_chmod($this->connectionId, $mode, $filename);
+        try {
+            return ftp_chmod($this->connectionId, $mode, $filename);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -225,7 +257,11 @@ class Ftp {
      */
     public function delete($path)
     {
-        return ftp_delete($this->connectionId, $path);
+        try {
+            return ftp_delete($this->connectionId, $path);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -235,7 +271,11 @@ class Ftp {
      */
     public function currentDir()
     {
-        return ftp_pwd($this->connectionId);
+        try {
+            return ftp_pwd($this->connectionId);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -247,7 +287,11 @@ class Ftp {
      */
     public function rename($oldName, $newName)
     {
+        try {
         return ftp_rename($this->connectionId, $oldName, $newName);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -258,7 +302,11 @@ class Ftp {
      */
     public function removeDir($directory)
     {
+        try {
         return ftp_rmdir($this->connectionId, $directory);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -269,7 +317,11 @@ class Ftp {
      */
     public function size($remoteFile)
     {
-        return ftp_size($this->connectionId, $remoteFile);
+        try {
+            return ftp_size($this->connectionId, $remoteFile);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -280,7 +332,11 @@ class Ftp {
      */
     public function time($remoteFile)
     {
-        return ftp_mdtm($this->connectionId, $remoteFile);
+        try {
+            return ftp_mdtm($this->connectionId, $remoteFile);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
 }
