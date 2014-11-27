@@ -103,6 +103,12 @@ Downloads a file from the FTP server
  - `$fileFrom`: The remote file path.
  - `$fileTo`: The local file path (will be overwritten if the file already exists).
 
+**readFile($fileFrom)**
+
+Same as the `downloadFile()` method except it downloads the remote file to the PHP output buffer and returns it.
+
+ - `$fileFrom`: The remote file path.
+
 **moveUp()**
 
  Changes to the parent directory.
