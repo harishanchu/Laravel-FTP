@@ -30,11 +30,14 @@ class Ftp {
     {
         if(!isset($config['port']))
             $config['port'] = 21;
+        if(!isset($config['timeout']))
+            $config['timeout'] = 90;
 
-        $connectionId = ftp_connect($config['host'],$config['port']);
-        $loginResponse = ftp_login($connectionId, $config['username'], $config['password']);
-        ftp_pasv($connectionId, $config['passive']);
-        ftp_set_option($connectionId, FTP_TIMEOUT_SEC, 300);
+        $connectionId = ftp_connect($config['host'],$config['port'],$config['timeout']);
+        if ($connectionId) {
+            $loginResponse = ftp_login($connectionId, $config['username'], $config['password']);
+            ftp_pasv($connectionId, $config['passive']);
+        }
 
         if ((!$connectionId) || (!$loginResponse))
             throw new \Exception('FTP connection has failed!');
