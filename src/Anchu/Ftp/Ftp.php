@@ -37,7 +37,6 @@ class Ftp {
         if ($connectionId) {
             $loginResponse = ftp_login($connectionId, $config['username'], $config['password']);
             ftp_pasv($connectionId, $config['passive']);
-            ftp_set_option($connectionId, FTP_TIMEOUT_SEC, 300);
         }
 
         if ((!$connectionId) || (!$loginResponse))
