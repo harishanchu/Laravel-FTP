@@ -31,7 +31,7 @@ class Ftp {
         if(!isset($config['port']))
             $config['port'] = 21;
         if(!isset($config['timeout']))
-            $config['timeout'] = 30;
+            $config['timeout'] = 90;
 
         $connectionId = ftp_connect($config['host'],$config['port'],$config['timeout']);
         if ($connectionId) {
