@@ -14,17 +14,17 @@ Add the package to your `composer.json` and run `composer update`.
 
     {
         "require": {
-            "anchu/ftp": "dev-master"
+            "anchu/ftp": "~2.0"
         }
     }
 
-Add the service provider in `app/config/app.php`:
+Add the service provider in `config/app.php`:
 
     'Anchu\Ftp\FtpServiceProvider',
 
 Configuration
 ------------
-Run `php artisan vendor:publish` and modify the config file(`/config/ftp.php`) with your ftp connections.
+Run `php artisan vendor:publish` and modify the config file(`config/ftp.php`) with your ftp connections.
 
 You can add dynamic FTP connections with following syntax
 
