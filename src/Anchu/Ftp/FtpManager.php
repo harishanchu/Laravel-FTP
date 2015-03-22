@@ -34,7 +34,7 @@ class FtpManager {
      */
     public function getDefaultConnection()
     {
-        return $this->app['config']['ftp::default'];
+        return $this->app['config']['ftp.default'];
     }
 
     /**
@@ -52,7 +52,7 @@ class FtpManager {
         // To get the ftp connection configuration, we will just pull each of the
         // connection configurations and get the configurations for the given name.
         // If the configuration doesn't exist, we'll throw an exception and bail.
-        $connections = $this->app['config']['ftp::connections'];
+        $connections = $this->app['config']['ftp.connections'];
 
         if (is_null($config = array_get($connections, $name)))
         {

@@ -18,7 +18,9 @@ class FtpServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('anchu/ftp');
+        $this->publishes([
+            __DIR__.'/../../config/config.php' => config_path('ftp.php'),
+        ]);
 	}
 
 	/**
@@ -35,8 +37,6 @@ class FtpServiceProvider extends ServiceProvider {
         $this->app->booting(function()
         {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            // alias 'Ftp' Will be removed soon
-            $loader->alias('Ftp', 'Anchu\Ftp\Facades\Ftp');
             $loader->alias('FTP', 'Anchu\Ftp\Facades\Ftp');
         });
 	}
