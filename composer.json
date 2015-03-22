@@ -1,7 +1,7 @@
 {
     "name": "anchu/ftp",
-    "description": "A simple Laravel 5 ftp service provider",
-    "keywords": ["ftp","laravel","l5","service provider"],
+    "description": "A simple Laravel 4/5 ftp service provider",
+    "keywords": ["ftp","laravel","l4", "l5","service provider"],
     "license": "MIT",
     "authors": [
         {

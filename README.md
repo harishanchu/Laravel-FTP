@@ -1,9 +1,11 @@
 Laravel-FTP
 ===========
 
-A simple Laravel 4 ftp service provider.
+A simple Laravel 5 ftp service provider.
 
 [![Build Status](https://travis-ci.org/harishanchu/Laravel-FTP.png?branch=master)](https://travis-ci.org/harishanchu/Laravel-FTP)
+
+### For Laravel 4.x, check [v1.0.0](https://github.com/harishanchu/Laravel-FTP/tree/v1.0.0)
 
 Installation
 ------------
@@ -22,12 +24,12 @@ Add the service provider in `app/config/app.php`:
 
 Configuration
 ------------
-Run `php artisan config:publish anchu/ftp` and modify the config file(`/app/config/packages/anchu/ftp/config.php`) with your ftp connections.
+Run `php artisan vendor:publish` and modify the config file(`/config/ftp.php`) with your ftp connections.
 
 You can add dynamic FTP connections with following syntax
 
 ```php
-Config::set('ftp::connections.key', array(
+Config::set('ftp.connections.key', array(
            'host'   => '',
            'username' => '',
            'password'   => '',
