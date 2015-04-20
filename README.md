@@ -79,6 +79,13 @@ Returns a list of files in the given directory
  - `$directory`: The directory to be listed. Default value: `.`.
  - `$parameters`: Optional parameters to prefix with directory. For example: `-la`. Default: `null`.
 
+**getDirListingDetailed($directory)**
+
+Returns a list of files in the given directory as an associative array with the following keys:
+rights, number, user, group, size, month, day and time
+
+ - `$directory`: The directory to be listed. Default value: `.`.
+
 **makeDir($directory)**
 
 Creates the specified directory on the FTP server.
