@@ -2,6 +2,16 @@
 
 class Ftp {
 
+	/**
+	 * type name for files
+	 */
+	const TYPE_FILE = 'file';
+
+	/**
+	 * type name for directories
+	 */
+	const TYPE_DIR = 'directory';
+
     /**
      * The active FTP connection resource id.
      */
@@ -106,7 +116,7 @@ class Ftp {
                     $item['time']
                 ) = $chunks;
 
-                $item['type'] = $chunks[0]{0} === 'd' ? 'directory' : 'file';
+                $item['type'] = $chunks[0]{0} === 'd' ? static::TYPE_DIR : static::TYPE_FILE;
                 array_splice($chunks, 0, 8);
 
                 $items[implode(" ", $chunks)] = $item;
@@ -338,20 +348,63 @@ class Ftp {
         }
     }
 
-    /**
-     * Removes a directory.
-     *
-     * @param $directory
-     * @return bool
-     */
-    public function removeDir($directory)
-    {
-        try {
-        return ftp_rmdir($this->connectionId, $directory);
-        } catch(\Exception $e) {
-            return false;
-        }
-    }
+	/**
+	 * Deletes the file specified by path from the FTP server.
+	 *
+	 * @param $directory
+	 * @param bool $recursive
+	 * @return bool
+	 */
+	public function removeDir($directory, $recursive = false)
+	{
+		// if recursively check whether the path is a folder and truncate it
+		if ($recursive === true) {
+			if (!$this->truncateDir($directory)) {
+				return false;
+			}
+		}
+
+		// delete the directory itself
+		try {
+			return ftp_rmdir($this->connectionId, $directory);
+		} catch(\Exception $e) {
+			return false;
+		}
+	}
+
+	/**
+	 * delete all files from given path
+	 *
+	 * @param $directory
+	 * @return bool
+	 */
+	public function truncateDir($directory)
+	{
+		$entries = $this->getDirListingDetailed($directory);
+		foreach ($entries as $name => $entry) {
+
+			// ignore directories
+			if ($name === '.' || $name === '..') {
+				continue;
+			}
+
+			$fullPath = $directory . '/' . $name;
+
+			// delete directory recursively
+			if ($entry['type'] === static::TYPE_DIR) {
+				$this->removeDir($fullPath, true);
+
+				// delete file and return false if it failed
+			} else if ($entry['type'] === static::TYPE_FILE) {
+				if (!$this->delete($fullPath)) {
+					return false;
+				}
+			}
+
+		}
+
+		return true;
+	}
 
     /**
      * Returns the size of the given file

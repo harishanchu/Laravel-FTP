@@ -146,11 +146,18 @@ Renames a file or a directory on the FTP server.
  - `$oldName`: The old file/directory name.
  - `$newName`: The new name.
 
-**removeDir($directory)**
+**removeDir($directory, $recursive)**
 
  Removes a directory
 
   - `$directory`: The directory to delete. This must be either an absolute or relative path to an empty directory.
+  - `$recursive`: Directory the folder recursively. Default value: false.
+
+**truncateDir($directory)**
+
+ Truncates a directory
+
+  - `$directory`: The directory to truncate. This must be either an absolute or relative path to a directory.
 
 **size($remoteFile)**
 
