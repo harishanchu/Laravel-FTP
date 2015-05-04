@@ -349,7 +349,7 @@ class Ftp {
     }
 
 	/**
-	 * Deletes the file specified by path from the FTP server.
+	 * Deletes the folder specified by path from the FTP server.
 	 *
 	 * @param $directory
 	 * @param bool $recursive
