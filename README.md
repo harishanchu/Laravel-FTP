@@ -151,7 +151,7 @@ Renames a file or a directory on the FTP server.
  Removes a directory
 
   - `$directory`: The directory to delete. This must be either an absolute or relative path to an empty directory.
-  - `$recursive`: Directory the folder recursively. Default value: false.
+  - `$recursive`: Delete the folder recursively. Default value: false.
 
 **truncateDir($directory)**
 
