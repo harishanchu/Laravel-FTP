@@ -4,6 +4,7 @@ Laravel-FTP
 A simple Laravel 5 ftp service provider.
 
 [![Build Status](https://travis-ci.org/harishanchu/Laravel-FTP.png?branch=master)](https://travis-ci.org/harishanchu/Laravel-FTP)
+[![Quality](https://codeclimate.com/github/harishanchu/Laravel-FTP/badges/gpa.svg)](https://codeclimate.com/github/harishanchu/Laravel-FTP)
 
 ### For Laravel 4.x, check [v1.0.0](https://github.com/harishanchu/Laravel-FTP/tree/v1.0.0)
 
