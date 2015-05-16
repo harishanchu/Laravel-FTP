@@ -22,7 +22,7 @@ class FtpManager {
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
-    public function __construct($app)
+    public function __construct(\Illuminate\Foundation\Application $app)
     {
         $this->app = $app;
     }
