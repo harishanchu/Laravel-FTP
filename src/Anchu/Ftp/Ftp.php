@@ -211,6 +211,7 @@ class Ftp {
      *
      * @param $fileFrom
      * @param $fileTo
+     * @param $mode
      * @return bool
      */
     public function uploadFile($fileFrom, $fileTo, $mode=null)
@@ -234,6 +235,7 @@ class Ftp {
      * 
      * @param $fileFrom
      * @param $fileTo
+     * @param $mode
      * @return bool
      */
     public function downloadFile($fileFrom, $fileTo, $mode=null)
