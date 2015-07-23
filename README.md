@@ -99,19 +99,21 @@ Changes the current directory on a FTP server.
 
  - `$directory`: The target directory.
 
-**uploadFile($fileFrom, $fileTo)**
+**uploadFile($fileFrom, $fileTo, $mode)**
 
 Uploads a local file to the FTP server.
 
  - `$fileFrom`: The local file path.
  - `$fileTo`: The remote file path.
+ - `$mode`: The transfer mode. Must be either `FTP_ASCII` or `FTP_BINARY`. Automatic mode resolution will be done if no mode is specified.
 
-**downloadFile($fileFrom, $fileTo)**
+**downloadFile($fileFrom, $fileTo, $mode)**
 
 Downloads a file from the FTP server
 
  - `$fileFrom`: The remote file path.
  - `$fileTo`: The local file path (will be overwritten if the file already exists).
+ - `$mode`: The transfer mode. Must be either `FTP_ASCII` or `FTP_BINARY`. Automatic mode resolution will be done if no mode is specified.
 
 **readFile($fileFrom)**
 
