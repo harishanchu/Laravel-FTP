@@ -213,10 +213,14 @@ class Ftp {
      * @param $fileTo
      * @return bool
      */
-    public function uploadFile($fileFrom, $fileTo)
+    public function uploadFile($fileFrom, $fileTo, $mode=null)
     {
+    	if($mode == null) {
+           $mode = $this->findTransferModeForFile($fileFrom);
+        }
+        
         try {
-            if(ftp_put($this->connectionId, $fileTo, $fileFrom, $this->findTransferModeForFile($fileFrom)))
+            if(ftp_put($this->connectionId, $fileTo, $fileFrom, $mode))
                 return true;
             else
                 return false;
@@ -232,12 +236,13 @@ class Ftp {
      * @param $fileTo
      * @return bool
      */
-    public function downloadFile($fileFrom, $fileTo)
+    public function downloadFile($fileFrom, $fileTo, $mode=null)
     {
-        $fileInfos = explode('.', $fileFrom);
-        $extension = end($fileInfos);
-
-        $mode = $this->findTransferModeForExtension($extension);
+        if($mode == null) {
+        	$fileInfos = explode('.', $fileFrom);
+        	$extension = end($fileInfos);
+           	$mode = $this->findTransferModeForExtension($extension);
+        }
 
         try {
             if (ftp_get($this->connectionId, $fileTo, $fileFrom, $mode, 0))
