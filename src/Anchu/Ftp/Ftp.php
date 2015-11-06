@@ -185,7 +185,7 @@ class Ftp {
 
     /**
      * Determine ftp transfer mode for a file extension
-     * 
+     *
      * @param $extension
      * @return int
      */
@@ -219,7 +219,7 @@ class Ftp {
     	if($mode == null) {
            $mode = $this->findTransferModeForFile($fileFrom);
         }
-        
+
         try {
             if(ftp_put($this->connectionId, $fileTo, $fileFrom, $mode))
                 return true;
@@ -232,7 +232,7 @@ class Ftp {
 
     /**
      * Download a file
-     * 
+     *
      * @param $fileFrom
      * @param $fileTo
      * @param $mode
@@ -247,10 +247,20 @@ class Ftp {
         }
 
         try {
-            if (ftp_get($this->connectionId, $fileTo, $fileFrom, $mode, 0))
-                return true;
+            if (is_resource($fileTo))
+            {
+                if (ftp_fget($this->connectionId, $fileTo, $fileFrom, $mode, 0))
+                    return true;
+                else
+                    return false;
+            }
             else
-                return false;
+            {
+                if (ftp_get($this->connectionId, $fileTo, $fileFrom, $mode, 0))
+                    return true;
+                else
+                    return false;
+            }
         } catch(\Exception $e) {
             return false;
         }
