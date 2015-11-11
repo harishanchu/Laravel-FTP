@@ -112,7 +112,8 @@ Uploads a local file to the FTP server.
 Downloads a file from the FTP server
 
  - `$fileFrom`: The remote file path.
- - `$fileTo`: The local file path (will be overwritten if the file already exists).
+ - `$fileTo`: The local file path (will be overwritten if the file already exists) or an open file pointer in which we store the data.
+ - .
  - `$mode`: The transfer mode. Must be either `FTP_ASCII` or `FTP_BINARY`. Automatic mode resolution will be done if no mode is specified.
 
 **readFile($fileFrom)**
