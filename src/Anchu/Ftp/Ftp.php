@@ -439,6 +439,21 @@ class Ftp {
     }
 
     /**
+     * Verifies whether given file exists
+     *
+     * @param $remoteFile
+     * @return bool
+     */
+    public function fileExists($remoteFile)
+    {
+        try {
+            return ftp_size($this->connectionId, $remoteFile) >=0;
+        } catch(\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * Returns the last modified time of the given file
      *
      * @param $remoteFile
