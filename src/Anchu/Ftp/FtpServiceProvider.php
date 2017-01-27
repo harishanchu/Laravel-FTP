@@ -30,7 +30,7 @@ class FtpServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-        $this->app['ftp'] = $this->app->share(function($app)
+        $this->app->singleton('ftp', function($app)
         {
             return new FtpManager($app);
         });
