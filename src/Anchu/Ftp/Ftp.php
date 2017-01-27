@@ -2,6 +2,16 @@
 
 class Ftp {
 
+	/**
+	 * type name for files
+	 */
+	const TYPE_FILE = 'file';
+
+	/**
+	 * type name for directories
+	 */
+	const TYPE_DIR = 'directory';
+
     /**
      * The active FTP connection resource id.
      */
@@ -85,6 +95,47 @@ class Ftp {
     }
 
     /**
+     * Get directory listing (detailed)
+     *
+     * @param string $directory
+     *
+     * @return array|bool
+     *
+     * @see      https://php.net/manual/de/function.ftp-rawlist.php#110803
+     *
+     */
+    public function getDirListingDetailed($directory = '.')
+    {
+        if (is_array($children = @ftp_rawlist($this->connectionId, $directory))) {
+            $items = array();
+
+            foreach ($children as $child) {
+                $chunks = preg_split("/\s+/", $child);
+                list(
+                    $item['rights'],
+                    $item['number'],
+                    $item['user'],
+                    $item['group'],
+                    $item['size'],
+                    $item['month'],
+                    $item['day'],
+                    $item['time']
+                ) = $chunks;
+
+                $item['type'] = $chunks[0]{0} === 'd' ? static::TYPE_DIR : static::TYPE_FILE;
+                array_splice($chunks, 0, 8);
+
+                $items[implode(" ", $chunks)] = $item;
+            }
+
+            return $items;
+        }
+
+        return false;
+
+    }
+
+    /**
      * Create new directory
      *
      * @param $directory
@@ -140,7 +191,7 @@ class Ftp {
 
     /**
      * Determine ftp transfer mode for a file extension
-     * 
+     *
      * @param $extension
      * @return int
      */
@@ -166,12 +217,17 @@ class Ftp {
      *
      * @param $fileFrom
      * @param $fileTo
+     * @param $mode
      * @return bool
      */
-    public function uploadFile($fileFrom, $fileTo)
+    public function uploadFile($fileFrom, $fileTo, $mode=null)
     {
+    	if($mode == null) {
+           $mode = $this->findTransferModeForFile($fileFrom);
+        }
+
         try {
-            if(ftp_put($this->connectionId, $fileTo, $fileFrom, $this->findTransferModeForFile($fileFrom)))
+            if(ftp_put($this->connectionId, $fileTo, $fileFrom, $mode))
                 return true;
             else
                 return false;
@@ -182,23 +238,35 @@ class Ftp {
 
     /**
      * Download a file
-     * 
+     *
      * @param $fileFrom
      * @param $fileTo
+     * @param $mode
      * @return bool
      */
-    public function downloadFile($fileFrom, $fileTo)
+    public function downloadFile($fileFrom, $fileTo, $mode=null)
     {
-        $fileInfos = explode('.', $fileFrom);
-        $extension = end($fileInfos);
-
-        $mode = $this->findTransferModeForExtension($extension);
+        if($mode == null) {
+        	$fileInfos = explode('.', $fileFrom);
+        	$extension = end($fileInfos);
+           	$mode = $this->findTransferModeForExtension($extension);
+        }
 
         try {
-            if (ftp_get($this->connectionId, $fileTo, $fileFrom, $mode, 0))
-                return true;
+            if (is_resource($fileTo))
+            {
+                if (ftp_fget($this->connectionId, $fileTo, $fileFrom, $mode, 0))
+                    return true;
+                else
+                    return false;
+            }
             else
-                return false;
+            {
+                if (ftp_get($this->connectionId, $fileTo, $fileFrom, $mode, 0))
+                    return true;
+                else
+                    return false;
+            }
         } catch(\Exception $e) {
             return false;
         }
@@ -303,20 +371,63 @@ class Ftp {
         }
     }
 
-    /**
-     * Removes a directory.
-     *
-     * @param $directory
-     * @return bool
-     */
-    public function removeDir($directory)
-    {
-        try {
-        return ftp_rmdir($this->connectionId, $directory);
-        } catch(\Exception $e) {
-            return false;
-        }
-    }
+	/**
+	 * Deletes the folder specified by path from the FTP server.
+	 *
+	 * @param $directory
+	 * @param bool $recursive
+	 * @return bool
+	 */
+	public function removeDir($directory, $recursive = false)
+	{
+		// if recursively check whether the path is a folder and truncate it
+		if ($recursive === true) {
+			if (!$this->truncateDir($directory)) {
+				return false;
+			}
+		}
+
+		// delete the directory itself
+		try {
+			return ftp_rmdir($this->connectionId, $directory);
+		} catch(\Exception $e) {
+			return false;
+		}
+	}
+
+	/**
+	 * delete all files from given path
+	 *
+	 * @param $directory
+	 * @return bool
+	 */
+	public function truncateDir($directory)
+	{
+		$entries = $this->getDirListingDetailed($directory);
+		foreach ($entries as $name => $entry) {
+
+			// ignore directories
+			if ($name === '.' || $name === '..') {
+				continue;
+			}
+
+			$fullPath = $directory . '/' . $name;
+
+			// delete directory recursively
+			if ($entry['type'] === static::TYPE_DIR) {
+				$this->removeDir($fullPath, true);
+
+				// delete file and return false if it failed
+			} else if ($entry['type'] === static::TYPE_FILE) {
+				if (!$this->delete($fullPath)) {
+					return false;
+				}
+			}
+
+		}
+
+		return true;
+	}
 
     /**
      * Returns the size of the given file

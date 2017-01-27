@@ -1,9 +1,12 @@
 Laravel-FTP
 ===========
 
-A simple Laravel 4 ftp service provider.
+A simple Laravel 5 ftp service provider.
 
 [![Build Status](https://travis-ci.org/harishanchu/Laravel-FTP.png?branch=master)](https://travis-ci.org/harishanchu/Laravel-FTP)
+[![Quality](https://codeclimate.com/github/harishanchu/Laravel-FTP/badges/gpa.svg)](https://codeclimate.com/github/harishanchu/Laravel-FTP)
+
+### For Laravel 4.x, check [v1.0.0](https://github.com/harishanchu/Laravel-FTP/tree/v1.0.0)
 
 Installation
 ------------
@@ -12,22 +15,22 @@ Add the package to your `composer.json` and run `composer update`.
 
     {
         "require": {
-            "anchu/ftp": "1.0.0"
+            "anchu/ftp": "~2.0"
         }
     }
 
-Add the service provider in `app/config/app.php`:
+Add the service provider in `config/app.php`:
 
     'Anchu\Ftp\FtpServiceProvider',
 
 Configuration
 ------------
-Run `php artisan config:publish anchu/ftp` and modify the config file(`/app/config/packages/anchu/ftp/config.php`) with your ftp connections.
+Run `php artisan vendor:publish` and modify the config file(`config/ftp.php`) with your ftp connections.
 
 You can add dynamic FTP connections with following syntax
 
 ```php
-Config::set('ftp::connections.key', array(
+Config::set('ftp.connections.key', array(
            'host'   => '',
            'username' => '',
            'password'   => '',
@@ -77,6 +80,13 @@ Returns a list of files in the given directory
  - `$directory`: The directory to be listed. Default value: `.`.
  - `$parameters`: Optional parameters to prefix with directory. For example: `-la`. Default: `null`.
 
+**getDirListingDetailed($directory)**
+
+Returns a list of files in the given directory as an associative array with the following keys:
+rights, number, user, group, size, month, day and time
+
+ - `$directory`: The directory to be listed. Default value: `.`.
+
 **makeDir($directory)**
 
 Creates the specified directory on the FTP server.
@@ -89,19 +99,22 @@ Changes the current directory on a FTP server.
 
  - `$directory`: The target directory.
 
-**uploadFile($fileFrom, $fileTo)**
+**uploadFile($fileFrom, $fileTo, $mode)**
 
 Uploads a local file to the FTP server.
 
  - `$fileFrom`: The local file path.
  - `$fileTo`: The remote file path.
+ - `$mode`: The transfer mode. Must be either `FTP_ASCII` or `FTP_BINARY`. Automatic mode resolution will be done if no mode is specified.
 
-**downloadFile($fileFrom, $fileTo)**
+**downloadFile($fileFrom, $fileTo, $mode)**
 
 Downloads a file from the FTP server
 
  - `$fileFrom`: The remote file path.
- - `$fileTo`: The local file path (will be overwritten if the file already exists).
+ - `$fileTo`: The local file path (will be overwritten if the file already exists) or an open file pointer in which we store the data.
+ - .
+ - `$mode`: The transfer mode. Must be either `FTP_ASCII` or `FTP_BINARY`. Automatic mode resolution will be done if no mode is specified.
 
 **readFile($fileFrom)**
 
@@ -137,11 +150,18 @@ Renames a file or a directory on the FTP server.
  - `$oldName`: The old file/directory name.
  - `$newName`: The new name.
 
-**removeDir($directory)**
+**removeDir($directory, $recursive)**
 
  Removes a directory
 
   - `$directory`: The directory to delete. This must be either an absolute or relative path to an empty directory.
+  - `$recursive`: Delete the folder recursively. Default value: false.
+
+**truncateDir($directory)**
+
+ Truncates a directory
+
+  - `$directory`: The directory to truncate. This must be either an absolute or relative path to a directory.
 
 **size($remoteFile)**
 
