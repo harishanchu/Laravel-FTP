@@ -30,6 +30,7 @@ return array(
             'username' => '',
             'password'   => '',
             'passive'   => false,
+            'secure' => false
         ),
     ),
 );
