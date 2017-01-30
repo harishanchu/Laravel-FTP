@@ -42,8 +42,14 @@ class Ftp {
             $config['port'] = 21;
         if(!isset($config['timeout']))
             $config['timeout'] = 90;
+        if (!isset($config['secure']))
+            $config['secure'] = false;
 
-        $connectionId = ftp_connect($config['host'],$config['port'],$config['timeout']);
+        if ($config['secure']) {
+            $connectionId = ftp_ssl_connect($config['host'], $config['port'], $config['timeout']);
+        } else {
+            $connectionId = ftp_connect($config['host'], $config['port'], $config['timeout']);
+        }
         if ($connectionId) {
             $loginResponse = ftp_login($connectionId, $config['username'], $config['password']);
             ftp_pasv($connectionId, $config['passive']);
