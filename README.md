@@ -35,6 +35,7 @@ Config::set('ftp.connections.key', array(
            'username' => '',
            'password'   => '',
            'passive'   => false,
+           'secure'   => false,
 ));
 ```
 
