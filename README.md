@@ -23,7 +23,7 @@ Add the package to your `composer.json` and run `composer update`.
 
 Add the service provider in `config/app.php`:
 
-    `Anchu\Ftp\FtpServiceProvider::class,`
+    Anchu\Ftp\FtpServiceProvider::class,
 
 Configuration
 ------------
