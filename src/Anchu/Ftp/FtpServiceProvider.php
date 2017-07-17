@@ -20,7 +20,7 @@ class FtpServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('ftp.php')
-        ], 'ftp');
+        ], 'config');
     }
 
     /**
