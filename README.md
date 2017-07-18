@@ -27,7 +27,7 @@ Add the service provider in `config/app.php`:
 
 Configuration
 ------------
-Run `php artisan vendor:publish --tag=ftp` and modify the config file(`config/ftp.php`) with your ftp connections.
+Run `php artisan vendor:publish --tag=config` and modify the config file(`config/ftp.php`) with your ftp connections.
 
 You can add dynamic FTP connections with following syntax
 
