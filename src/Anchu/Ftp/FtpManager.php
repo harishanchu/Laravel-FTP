@@ -1,5 +1,7 @@
 <?php namespace Anchu\Ftp;
 
+use Illuminate\Support\Arr;
+
 class FtpManager {
 
     /**
@@ -54,7 +56,7 @@ class FtpManager {
         // If the configuration doesn't exist, we'll throw an exception and bail.
         $connections = $this->app['config']['ftp.connections'];
 
-        if (is_null($config = array_get($connections, $name)))
+        if (is_null($config = Arr::get($connections, $name)))
         {
             throw new \InvalidArgumentException("Ftp [$name] not configured.");
         }
