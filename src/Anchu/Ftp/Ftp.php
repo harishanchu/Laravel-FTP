@@ -122,7 +122,7 @@ class Ftp {
                     $item['time']
                 ) = $chunks;
 
-                $item['type'] = $chunks[0]{0} === 'd' ? static::TYPE_DIR : static::TYPE_FILE;
+                $item['type'] = $chunks[0][0] === 'd' ? static::TYPE_DIR : static::TYPE_FILE;
                 array_splice($chunks, 0, 8);
 
                 $items[implode(" ", $chunks)] = $item;
